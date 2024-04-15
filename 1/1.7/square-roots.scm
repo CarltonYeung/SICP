@@ -3,23 +3,24 @@
 (define (abs x)
     (if (< x 0) (- x) x))
 
-(define (good-enough? guess x)
-    (< (abs (- (square guess) x)) 0.01))
-
-(define (better-good-enough? guess previous-guess)
-    (< (abs (- guess previous-guess)) (/ guess 1000000)))
-
 (define (avg x y) (/ (+ x y) 2))
 
-(define (improve guess x)
-    (avg guess (/ x guess)))
+(define (sqrt x)
+    (define (good-enough? guess)
+        (< (abs (- (square guess) x)) 0.01))
 
-(define (sqrt-iter guess x)
-    (if (better-good-enough? (improve guess x) guess)
-        guess
-        (sqrt-iter (improve guess x) x)))
+    (define (better-good-enough? guess)
+        (< (abs (- guess (improve guess))) (/ guess 1000000)))
 
-(define (sqrt x) (sqrt-iter 1.0 x))
+    (define (improve guess)
+        (avg guess (/ x guess)))
+
+    (define (sqrt-iter guess)
+        (if (better-good-enough? guess)
+            guess
+            (sqrt-iter (improve guess))))
+
+    (sqrt-iter 1.0))
 
 (display (sqrt 9)) (newline)
 (display (sqrt (+ 100 37))) (newline)

@@ -3,18 +3,19 @@
 (define (abs x)
     (if (< x 0) (- x) x))
 
-(define (better-good-enough? guess previous-guess)
-    (< (abs (- guess previous-guess)) (/ guess 1000000)))
+(define (cbrt x)
+    (define (good-enough? guess)
+        (< (abs (- guess (improve guess))) (/ guess 1000000)))
 
-(define (improve guess x)
-    (/ (+ (/ x (square guess)) (* 2 guess)) 3))
+    (define (improve guess)
+        (/ (+ (/ x (square guess)) (* 2 guess)) 3))
 
-(define (cbrt-iter guess x)
-    (if (better-good-enough? (improve guess x) guess)
-        guess
-        (cbrt-iter (improve guess x) x)))
+    (define (cbrt-iter guess)
+        (if (good-enough? guess)
+            guess
+            (cbrt-iter (improve guess))))
 
-(define (cbrt x) (cbrt-iter 1.0 x))
+    (cbrt-iter 1.0))
 
 (display (cbrt 9)) (newline)
 (display (cbrt (+ 100 37))) (newline)
