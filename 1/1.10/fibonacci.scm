@@ -1,0 +1,20 @@
+(define (fibonacci n)
+    (define (fibonacci-iter n2 n1 counter)
+        (if (= counter n)
+            (+ n1 n2)
+            (fibonacci-iter n1 (+ n2 n1) (+ counter 1))))
+
+    (cond ((= n 0) 0)
+          ((= n 1) 1)
+          (else (fibonacci-iter 0 1 2))))
+
+
+(display (fibonacci 0)) (newline)
+(display (fibonacci 1)) (newline)
+(display (fibonacci 2)) (newline)
+(display (fibonacci 3)) (newline)
+(display (fibonacci 4)) (newline)
+(display (fibonacci 5)) (newline)
+(display (fibonacci 6)) (newline)
+(display (fibonacci 7)) (newline)
+(display (fibonacci 8)) (newline)
